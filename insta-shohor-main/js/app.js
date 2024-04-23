@@ -84,11 +84,11 @@ const createPost = (post) => {
 
               <div class="post__footer">
                 <div class="post__buttons">
-                  <button class="post__button" onclick="addToLiked(${post.id})">
+                  <button class="post__button" id="addComment" onclick="addToLiked(${post.id})">
                   <i class="fa-solid fa-heart ${isLiked(post.id) && "text-danger"}"></i>
                     
                   </button>
-                  <button class="post__button">
+                  <button class="post__button"  onclick="addComment(${post.id})">
                     <i class="fa-solid fa-comment"></i>
                   </button>
                   
@@ -158,6 +158,14 @@ const displayReportedPosts = () => {
     });
 };
 
+const addComment = (postId) => {
+  const comment = prompt("Enter your comment:");
+  if (comment) {
+    const post = posts.find(post => post.id === postId);
+    post.comments = { user: "Current User", text: comment };
+    showPosts(posts);
+  }
+};
 const loadPosts = async () =>{
   let data = await fetch('https://raw.githubusercontent.com/ProgrammingHero1/insta-shohor/main/data/posts.json');
   posts = await data.json();
